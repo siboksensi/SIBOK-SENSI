@@ -1,26 +1,20 @@
-# SIBOK SENSI PRO — Starter Kit
+SIBOK SENSI V2 — starter prototype
+==================================
 
-A starter architecture for a key-gated sensitivity-profile website with an admin dashboard.
+Files:
+- index.html: customer key-entry + device-based sensitivity profile demo
+- admin.html: admin dashboard prototype (key generation, Local Config URL, feature toggles, maintenance, device list, backup/restore)
 
-## Included
-- Responsive customer website and admin-dashboard UI preview.
-- Key activation flow clearly marked as demo until backend is configured.
-- Supabase SQL schema for keys, activations, profiles, roles, feature catalog, maintenance settings, and audit logs.
-- Edge Function example for server-side key activation.
-- SQL seed for 500 catalog entries (catalog entries are not 500 implemented capabilities).
+IMPORTANT LIMITATIONS
+- This is a FRONTEND PROTOTYPE. It saves data in localStorage in the current browser only.
+- Admin and customer pages will share demo data only when opened in the same browser profile and same origin. For local file:// pages, browser behavior may isolate storage; host both pages on the same origin for a reliable demo.
+- This is NOT secure for real customers. Do not use real paid keys or private admin credentials yet.
+- For production, connect a backend/database and enforce key validity, expiry, device authorization, feature permissions, and maintenance server-side.
+- The Sensi values are sample recommendations generated deterministically from the selected device/style. They do not change Free Fire settings automatically and are not guaranteed to improve aim.
+- Local Config stores an external URL only; it does not upload or modify the remote server's files.
+- Device model catalog is only a starter sample; verify models and tune profiles with real testing.
 
-## Important
-This is a starter kit, not a deployed production service. GitHub Pages can host the frontend, but secure key
-validation, admin controls, private file downloads, and global maintenance mode need a configured backend.
-Never put a Supabase service-role key in browser code. The sample sensitivity profiles are editable examples,
-not guaranteed optimal settings. Do not enable features until they have real implementations and tests.
-
-## Setup overview
-1. Create a Supabase project.
-2. Run `supabase/schema.sql` in its SQL Editor.
-3. Deploy `supabase/functions/activate-key/index.ts` as an Edge Function.
-4. Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as Edge Function secrets.
-5. Configure frontend Supabase URL/anon key and wire activation to the deployed function.
-6. Create your first admin Auth user, then insert their UUID into `public.user_roles` as `super_admin`.
-7. Implement authenticated server-side admin functions for key creation/revocation, private file downloads,
-   profile management, feature flags, maintenance settings, and audit logs before production use.
+Suggested free deployment path:
+1. Keep the customer page as index.html and admin page as admin.html on one frontend host.
+2. Add a backend service and database before sharing publicly.
+3. Never place admin passwords or server secrets in frontend JavaScript.
